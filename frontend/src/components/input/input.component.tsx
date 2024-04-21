@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEventHandler, FC, useRef, useState } from "react";
+import { ChangeEventHandler, FC, useState } from "react";
 import { InputProps } from "./input.types";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 

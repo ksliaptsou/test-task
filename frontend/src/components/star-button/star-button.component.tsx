@@ -1,5 +1,5 @@
 "use client";
-import { FC, PropsWithChildren, useRef, useState } from "react";
+import { FC, useState } from "react";
 import { StarButtonProps } from "./star-button.types";
 import { axiosInstance } from "@/config/axios.config";
 import { HttpClient } from "@/services/http-controller.service";

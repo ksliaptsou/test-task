@@ -1,6 +1,5 @@
 import { Home } from "@/components/home/home.component";
 import { axiosInstance } from "@/config/axios.config";
-import { buildEnvVars } from "@/constants/envVariables";
 import { HttpClient } from "@/services/http-controller.service";
 import { RepoClient } from "@/services/repo.service";
 import { HomePageProps } from "@/types/page.types";

@@ -1,4 +1,3 @@
-import { buildEnvVars } from "@/constants/envVariables";
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export interface HttpRequestOptions extends Pick<AxiosRequestConfig, "data"> {

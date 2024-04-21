@@ -1,5 +1,3 @@
-import { RepoClient } from "@/services/repo.service";
-
 export type OrderQuery = "desc" | "asc";
 export type SortQuery = "stars" | "forks" | "help-wanted-issues" | "updated";
 
