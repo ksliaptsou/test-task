@@ -6,6 +6,7 @@ import {
   IsNumber,
   IsArray,
   ValidateNested,
+  IsBoolean,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -44,6 +45,11 @@ export class SearchResultDto {
   @IsNumber()
   @ApiProperty()
   stars: number;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  @ApiProperty()
+  isStarred: boolean;
 }
 
 export class SearchResultResponseDto {
@@ -51,6 +57,11 @@ export class SearchResultResponseDto {
   @IsNumber()
   @ApiProperty()
   count: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @ApiProperty()
+  pageSize: number;
 
   @IsNotEmpty()
   @IsNumber()
