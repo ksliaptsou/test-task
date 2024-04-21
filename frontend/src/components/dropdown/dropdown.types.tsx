@@ -1,3 +1,5 @@
+import { SearchRepoRequestQuery } from "@/types/repo.types";
+
 export interface DropdownItems {
   name: string;
   value: string;
@@ -5,5 +7,5 @@ export interface DropdownItems {
 export interface DropdownProps {
   dropdownPlaceholder: string;
   items: DropdownItems[];
-  onSelect: (value: string) => void;
+  queryKey: string;
 }

@@ -1,5 +1,6 @@
-const buildEnv = process.env;
+// const buildEnv = process.env;
 
-const buildEnvVars = {
-  API_URL: buildEnv['API_URL']
-};
+// export const buildEnvVars = {
+//   API_URL: buildEnv["API_URL"],
+//   API_TOKEN: `Bearer ${buildEnv["API_TOKEN"]}`,
+// };

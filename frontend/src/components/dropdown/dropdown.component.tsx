@@ -2,19 +2,35 @@
 
 import { ChevronSVG } from "@/assets";
 import { DropdownProps } from "./dropdown.types";
-import { FC, useState } from "react";
+import { FC, ReactEventHandler, useState } from "react";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 export const Dropdown: FC<DropdownProps> = ({
   dropdownPlaceholder,
   items,
-  onSelect,
+  queryKey,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const [value, setValue] = useState<string>(
+    () => searchParams.get(queryKey) || ""
+  );
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleDropdownClick = () => {
     setIsOpen((prevValue) => !prevValue);
   };
 
+  const handleSelect: ReactEventHandler<HTMLInputElement> = (e) => {
+    setValue(e.currentTarget.value)
+    const params = new URLSearchParams(searchParams);
+    params.set(queryKey, e.currentTarget.value);
+    const queryString = params.toString();
+    const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+    router.push(updatedPath);
+  };
+  
   return (
     <div className="w-fit">
       <button
@@ -40,7 +56,8 @@ export const Dropdown: FC<DropdownProps> = ({
                     id="default-radio-1"
                     type="radio"
                     value={v.value}
-                    onSelect={() => onSelect(v.value)}
+                    checked={v.value === value}
+                    onClick={handleSelect}
                     name="default-radio"
                     className="w-4 h-4 text-blue-600 ring-offset-gray-700 focus:ring-offset-gray-700  bg-gray-600 border-gray-500"
                   />

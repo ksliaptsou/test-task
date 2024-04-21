@@ -17,7 +17,7 @@ export default () => {
 export const validationSchema = Joi.object({
   PORT: Joi.string().required(),
   TARGET_SEARCH_DRIVER: Joi.string().required(),
-  // ALLOWED_ORIGINS: Joi.string().optional(),
+  ALLOWED_ORIGINS: Joi.string().optional(),
   API_TOKEN_SECRET: Joi.string().required().min(16),
   CACHE_EXPIRE_TIME: Joi.number().min(0).required(),
 });

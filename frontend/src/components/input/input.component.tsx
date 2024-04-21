@@ -1,7 +1,42 @@
-import { FC } from "react";
-import { InputProps } from "./input.types";
+"use client";
 
-export const Input: FC<InputProps> = ({ label, placeholder }) => {
+import { ChangeEventHandler, FC, useRef, useState } from "react";
+import { InputProps } from "./input.types";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+
+export const Input: FC<InputProps> = ({
+  label,
+  placeholder,
+  queryKey,
+  ...props
+}) => {
+  const searchParams = useSearchParams();
+  const [value, setValue] = useState<string>(
+    () => searchParams.get(queryKey) || ""
+  );
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const updateSearchQuery = (updatedQuery: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (updatedQuery) {
+      params.set(queryKey, updatedQuery);
+    } else {
+      params.delete(queryKey);
+    }
+    const queryString = params.toString();
+
+    const updatedPath = queryString ? `${pathname}?${queryString}` : pathname;
+
+    router.push(updatedPath);
+  };
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setValue(e.target.value);
+
+    updateSearchQuery(e.target.value);
+  };
+
   return (
     <div>
       {label && (
@@ -10,9 +45,11 @@ export const Input: FC<InputProps> = ({ label, placeholder }) => {
         </label>
       )}
       <input
-        type="text"
+        {...props}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
       />
     </div>
   );

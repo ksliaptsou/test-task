@@ -1,8 +1,9 @@
+'use client'
 import { FC } from "react";
-import { SearchResultGridProps } from "./search-results-grid.types";
 import { SearchResultItem } from "../search-result-item/search-results-item.component";
+import { SearchResultResponse } from "@/types/repo.types";
 
-export const SearchResultsGrid: FC<SearchResultGridProps> = ({ items }) => {
+export const SearchResultsGrid: FC<SearchResultResponse> = ({ items }) => {
   return (
     <div className="bg-gray-900 py-16">
       <div className="container mx-auto px-4">
@@ -10,9 +11,13 @@ export const SearchResultsGrid: FC<SearchResultGridProps> = ({ items }) => {
           Results of search
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {items.map((v) => (
-            <SearchResultItem key={v.id} {...v} />
-          ))}
+          {items ? (
+            items.map((v) => <SearchResultItem key={v.id} {...v} />)
+          ) : (
+            <p className="text-1xl font-bold text-white mb-8">
+              Nothing to display
+            </p>
+          )}
         </div>
       </div>
     </div>

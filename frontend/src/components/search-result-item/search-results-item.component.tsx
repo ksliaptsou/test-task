@@ -1,14 +1,17 @@
 import { FC } from "react";
-import { SearchResultItemProps } from "./search-results-item.types";
 import Link from "next/link";
+import { SearchResultResponseItem } from "@/types/repo.types";
+import { StarButton } from "../star-button/star-button.component";
 
-export const SearchResultItem: FC<SearchResultItemProps> = ({
+export const SearchResultItem: FC<SearchResultResponseItem> = ({
   repoName,
   repoFullPath,
   url,
   description,
   forks,
   stars,
+  isStarred,
+  id,
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg p-8">
@@ -20,10 +23,10 @@ export const SearchResultItem: FC<SearchResultItemProps> = ({
       <p className="text-gray-500 text-sm mt-2">Forks: {forks || 0}</p>
       <p className="text-gray-500 text-sm mt-2">Stars: {stars || 0}</p>
       <div className="flex items-center justify-between mt-4">
-        <span className="text-gray-900 font-bold text-lg">$29.99</span>
-        <button className="bg-gray-900 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800">
-          Add to Cart
-        </button>
+        <StarButton
+          isStarred={isStarred}
+          id={id}
+       />
       </div>
     </div>
   );

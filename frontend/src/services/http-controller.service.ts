@@ -1,7 +1,7 @@
-import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { buildEnvVars } from "@/constants/envVariables";
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
-export interface HttpRequestOptions extends Pick<AxiosRequestConfig, 'data'> {
-  bearerToken?: string;
+export interface HttpRequestOptions extends Pick<AxiosRequestConfig, "data"> {
   abortSignal?: AbortSignal;
   queryParams?: Partial<{ [key: string]: string | number }>;
 }
@@ -10,15 +10,18 @@ export class HttpClient {
   private axios: AxiosInstance;
   private apiBasePath: string;
   private requestTimeout: number;
+  private token?: string;
 
   constructor(
     axios: AxiosInstance,
     apiBasePath: string,
-    requestTimeout: number
+    requestTimeout?: number,
+    token?: string
   ) {
     this.axios = axios;
     this.apiBasePath = apiBasePath;
-    this.requestTimeout = requestTimeout;
+    this.requestTimeout = requestTimeout || 5000;
+    this.token = token;
   }
 
   private createRequestConfig(options?: HttpRequestOptions) {
@@ -28,15 +31,10 @@ export class HttpClient {
       params: options?.queryParams,
       timeout: this.requestTimeout,
       data: options?.data,
+      headers: {
+        Authorization: this.token,
+      },
     };
-
-    if (
-      requestConfig.headers !== undefined &&
-      options !== undefined &&
-      options.bearerToken !== undefined
-    ) {
-      requestConfig.headers['Authorization'] = `Bearer ${options.bearerToken}`;
-    }
     return requestConfig;
   }
 
@@ -46,10 +44,8 @@ export class HttpClient {
   }
 
   public async get<R>(path: string, options?: HttpRequestOptions) {
-    const response = await this.axios.get<R>(
-      path,
-      this.createRequestConfig(options)
-    );
+    const response = await this.axios
+      .get<R>(path, this.createRequestConfig(options))
     return this.transformResponse<R>(response);
   }
 
@@ -65,11 +61,8 @@ export class HttpClient {
   }
 
   public async post<D, R>(path: string, data: D, options?: HttpRequestOptions) {
-    const response = await this.axios.post<R>(
-      path,
-      data,
-      this.createRequestConfig(options)
-    );
+    const response = await this.axios
+      .post<R>(path, data, this.createRequestConfig(options))
     return this.transformResponse<R>(response);
   }
 

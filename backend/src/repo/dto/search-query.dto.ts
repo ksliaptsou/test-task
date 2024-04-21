@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 import {
   IsNotEmpty,
   IsString,
@@ -39,6 +40,9 @@ export class SearchQueryDto {
   order?: OrderQuery;
 
   @IsOptional({ always: true })
+  @Transform(({ value }) => {
+    return Number(value);
+  })
   @IsNumber()
   @Max(100)
   @Min(1)
@@ -46,6 +50,9 @@ export class SearchQueryDto {
   pageSize?: number;
 
   @IsOptional({ always: true })
+  @Transform(({ value }) => {
+    return Number(value);
+  })
   @IsNumber()
   @Min(1)
   @ApiProperty({ required: false })
