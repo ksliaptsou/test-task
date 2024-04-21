@@ -35,8 +35,8 @@ export const Home: FC<HomeProps> = ({ data }) => {
         queryKey="pageSize"
         label="Page Size"
         type="number"
-        max={100}
-        min={10}
+        max={99}
+        min={2}
       /> 
       <Input
         queryKey="page"

@@ -4,7 +4,6 @@ import {
   IsNotEmpty,
   IsString,
   IsOptional,
-  IsEnum,
   IsNumber,
   Max,
   Min,
@@ -28,14 +27,12 @@ export class SearchQueryDto {
   query: string;
 
   @IsOptional({ always: true })
-  @IsString()
-  @IsEnum(SortQueries)
+  @IsString({ groups: SortQueries })
   @ApiProperty({ required: false })
   sort?: SortQuery;
 
   @IsOptional({ always: true })
-  @IsString()
-  @IsEnum(OrderQueries)
+  @IsString({ groups: OrderQueries })
   @ApiProperty({ required: false })
   order?: OrderQuery;
 

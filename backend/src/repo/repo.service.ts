@@ -70,13 +70,15 @@ export class RepoService {
 
       return result;
     } catch (error) {
-      return error;
+      console.log(error);
+      return error.response.data.message;
     }
   }
 
   async setStar(id: string) {
+    const cacheExpireTime = this.configService.get('cacheExpireTime');
     const previousStarValue = await this.cacheManager.get<boolean>(id);
-    await this.cacheManager.set(id, !previousStarValue);
+    await this.cacheManager.set(id, !previousStarValue, cacheExpireTime);
     return;
   }
 }

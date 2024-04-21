@@ -32,6 +32,9 @@ export const Input: FC<InputProps> = ({
   };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    if(props.type === 'number' && (e.target.value > props.max! || e.target.value < props.min!)){
+        return;
+    }
     setValue(e.target.value);
 
     updateSearchQuery(e.target.value);
